@@ -10,7 +10,11 @@
   <body>
     <div class="container">
       <div class="nav-container flex">
-        <img src="/images/logo.svg" />
+        <div>
+          <img class="menu-icon" src="/images/icon-menu.svg" />
+          <img class="logo" src="/images/logo.svg" />
+        </div>
+
         <ul class="menu flex">
           <li><a>Collections</a></li>
           <li><a>Men</a></li>
@@ -27,6 +31,12 @@
         <div class="product-images">
           <div class="main-img">
             <img class="main-photo" src="/images/image-product-1.jpg" />
+            <div class="circle previous">
+              <img class="arrow" src="/images/icon-previous.svg" />
+            </div>
+            <div class="circle next">
+              <img class="arrow" src="/images/icon-next.svg" />
+            </div>
           </div>
           <div class="preview flex">
             <div class="border">
@@ -58,15 +68,17 @@
             Featuring a durable rubber outer sole, they'll withstand everything
             the weather can offer.
           </p>
-          <div class="price flex">
-            <h2 class="margin-0 black">$125.00</h2>
-            <div class="promo flex">
-              <h5 class="margin-0-auto">50%</h5>
+          <div class="mobile-price">
+            <div class="price flex">
+              <h2 class="margin-0 black">$125.00</h2>
+              <div class="promo flex">
+                <h5 class="margin-0-auto">50%</h5>
+              </div>
             </div>
-          </div>
 
-          <div class="og-price">
-            <p class="og-price">$250.00</p>
+            <div class="og-price">
+              <p class="og-price">$250.00</p>
+            </div>
           </div>
 
           <div class="cart-container flex margin-30-0">
