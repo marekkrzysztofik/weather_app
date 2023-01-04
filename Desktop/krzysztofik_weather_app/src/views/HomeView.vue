@@ -23,7 +23,7 @@
         </div>
 
         <Card style="width: 25rem; margin-bottom: 2em">
-          <template #title> {{now}} </template>
+          <template #title> {{now}} kocham cie marus </template>
           <template #content>
             <p>{{ weatherData }}</p>
           </template>
