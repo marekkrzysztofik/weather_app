@@ -1,0 +1,11 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+.cards {
+  display: flex;
+}
+
+.btn {
+  margin: 10px auto;
+}
