@@ -9,7 +9,7 @@
           type="text"
           placeholder="Search"
         />
-      </span>
+      </span> eloelo
       <Button @click="currentWeather(searchQuery)" label="Submit" />
     </div>
     <div class="cards">
