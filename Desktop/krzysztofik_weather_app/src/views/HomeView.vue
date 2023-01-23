@@ -42,7 +42,7 @@
           <template #content>
             <div class="flex main-info">
               <p class="main-temp margin-0" v-if="loader">
-                {{ basicInfo.temp }}℃
+                {{ basicInfo.temp }} ℃
               </p>
               <div>
                 <p class="margin-0">{{ description }}</p>
@@ -52,50 +52,22 @@
         </Card>
       </div>
       <div class="details-grid">
-      <div class="details-item">
-        <h1>3h</h1>
-        <img src="/icons/01d.svg" alt="">
-        <p v-if="pogoda">{{ pogoda.temperature }}</p>
+        <div
+          v-for="item of dailyForecast.temperature"
+          class="details-item flex"
+        >
+          <h1>3h</h1>
+          <p>{{ item }} ℃</p>
+        </div>
+        <img
+          v-for="item2 of dailyForecast.icon"
+          class="details-img"
+          :src="`/icons/${item2}.svg`"
+          alt=""
+        />
       </div>
-      <div class="details-item">
-        <h1>3h</h1>
-        <img src="/icons/01d.svg" alt="">
-        <p>25stopni</p>
-      </div>
-      <div class="details-item">
-        <h1>3h</h1>
-        <img src="/icons/01d.svg" alt="">
-        <p>25stopni</p>
-      </div>
-      <div class="details-item">
-        <h1>3h</h1>
-        <img src="/icons/01d.svg" alt="">
-        <p>25stopni</p>
-      </div>
-      <div class="details-item">
-        <h1>3h</h1>
-        <img src="/icons/01d.svg" alt="">
-        <p>25stopni</p>
-      </div>
-      <div class="details-item">
-        <h1>3h</h1>
-        <img src="/icons/01d.svg" alt="">
-        <p>25stopni</p>
-      </div>
-      <div class="details-item">
-        <h1>3h</h1>
-        <img src="/icons/01d.svg" alt="">
-        <p>25stopni</p>
-      </div>
-      <div class="details-item">
-        <h1>3h</h1>
-        <img src="/icons/01d.svg" alt="">
-        <p>25stopni</p>
-      </div>
-    </div>
     </div>
   </div>
-  
 </template>
 <script setup>
 import { ref } from 'vue'
@@ -107,7 +79,6 @@ if (months < 11) {
   months = '' + now.getMonth() + 1
 }
 const today = ref(now.getDate() + '.' + months + '.' + now.getFullYear())
-
 const searchQuery = ref('')
 const weatherData = ref('')
 const basicInfo = ref('')
@@ -115,6 +86,7 @@ const description = ref('')
 const icon = ref('')
 
 const currentWeather = async (query) => {
+  
   const url = `http://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&APPID=11f8ef5fb876de2d2394104040969315`
 
   await fetch(url)
@@ -129,26 +101,32 @@ const currentWeather = async (query) => {
 
   //console.log(basicInfo.value)
 }
-const pogoda = ref({
-  temperature:'',
-  description:'',
-  icon:''
+// const pogoda = ref(
+//   {
+//     temperature: '',
+//     description: '',
+//     icon: '',
+//   },
+// )
+var dailyForecast = ref({
+  temperature: [],
+  icon: [],
 })
 //const weatherForecast =
 const getWeatherForecast = async (query) => {
-  const forecast = `http://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&cnt=8&appid=11f8ef5fb876de2d2394104040969315`
-  
-   await axios.get(forecast)
-   .then(result => {
-    pogoda.value.temperature=result.data.list[0].main.temp;
-   })
-  
-    // pogoda.value.temperature=response.data.list[0].main.temp;
-  //pogoda.temp.value =
-  console.log(pogoda.value.temperature);
-  //console.log(weatherForecast.data.list[0].dt_txt)
-}
+  const apiLink = `http://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&cnt=8&appid=11f8ef5fb876de2d2394104040969315`
+  const pogoda = await axios.get(apiLink)
+  let forecast = pogoda.data.list
 
+  console.log(forecast)
+
+  await forecast.forEach((hour) => {
+    dailyForecast.value.temperature.push(hour.main.temp)
+    dailyForecast.value.icon.push(hour.weather[0].icon)
+  })
+  //dailyForecast.temperature.push(hour.main.temp);
+  console.log(dailyForecast)
+}
 </script>
 
 <style scoped></style>
