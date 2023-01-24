@@ -52,15 +52,12 @@
         </Card>
       </div>
       <div class="details-grid">
-        <div
-          v-for="item of dailyForecast.temperature"
-          class="details-item flex"
-        >
+        <div v-for="item of temp" class="details-item flex">
           <h1>3h</h1>
           <p>{{ item }} ℃</p>
         </div>
         <img
-          v-for="item2 of dailyForecast.icon"
+          v-for="item2 of detailsIcon"
           class="details-img"
           :src="`/icons/${item2}.svg`"
           alt=""
@@ -72,6 +69,7 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
+//v-for="item of dailyForecast.temperature"
 let loader = false
 let now = new Date()
 var months = now.getMonth() + 1
@@ -86,7 +84,6 @@ const description = ref('')
 const icon = ref('')
 
 const currentWeather = async (query) => {
-  
   const url = `http://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&APPID=11f8ef5fb876de2d2394104040969315`
 
   await fetch(url)
@@ -108,24 +105,32 @@ const currentWeather = async (query) => {
 //     icon: '',
 //   },
 // )
-var dailyForecast = ref({
-  temperature: [],
-  icon: [],
-})
+const temp = ref([])
+const detailsIcon = ref([])
+// var dailyForecast = ref({
+//   temperature: [],
+//   icon: [],
+// })
 //const weatherForecast =
 const getWeatherForecast = async (query) => {
   const apiLink = `http://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&cnt=8&appid=11f8ef5fb876de2d2394104040969315`
   const pogoda = await axios.get(apiLink)
   let forecast = pogoda.data.list
+  if (temp.value.length == 0 && detailsIcon.value.length == 0) {
+    await forecast.forEach((hour) => {
+      temp.value.push(hour.main.temp)
+      detailsIcon.value.push(hour.weather[0].icon)
+    })
+  }
 
-  console.log(forecast)
-
-  await forecast.forEach((hour) => {
-    dailyForecast.value.temperature.push(hour.main.temp)
-    dailyForecast.value.icon.push(hour.weather[0].icon)
-  })
+  // await forecast.forEach((hour) => {
+  //   dailyForecast.value.temperature.push(hour.main.temp)
+  //   dailyForecast.value.icon.push(hour.weather[0].icon)
+  // })
   //dailyForecast.temperature.push(hour.main.temp);
-  console.log(dailyForecast)
+  //console.log(dailyForecast)
+
+  console.log(temp.value.length)
 }
 </script>
 
