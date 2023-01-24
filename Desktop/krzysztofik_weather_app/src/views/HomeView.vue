@@ -69,7 +69,7 @@
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
-//v-for="item of dailyForecast.temperature"
+
 let loader = false
 let now = new Date()
 var months = now.getMonth() + 1
@@ -84,8 +84,8 @@ const description = ref('')
 const icon = ref('')
 
 const currentWeather = async (query) => {
+  clearData()
   const url = `http://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&APPID=11f8ef5fb876de2d2394104040969315`
-
   await fetch(url)
     .then((response) => response.json())
     .then((data) => {
@@ -95,23 +95,11 @@ const currentWeather = async (query) => {
   description.value = weatherData.value.weather[0].description
   basicInfo.value = weatherData.value.main
   icon.value = weatherData.value.weather[0].icon
-
-  //console.log(basicInfo.value)
 }
-// const pogoda = ref(
-//   {
-//     temperature: '',
-//     description: '',
-//     icon: '',
-//   },
-// )
+
 const temp = ref([])
 const detailsIcon = ref([])
-// var dailyForecast = ref({
-//   temperature: [],
-//   icon: [],
-// })
-//const weatherForecast =
+
 const getWeatherForecast = async (query) => {
   const apiLink = `http://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&cnt=8&appid=11f8ef5fb876de2d2394104040969315`
   const pogoda = await axios.get(apiLink)
@@ -122,16 +110,18 @@ const getWeatherForecast = async (query) => {
       detailsIcon.value.push(hour.weather[0].icon)
     })
   }
-
-  // await forecast.forEach((hour) => {
-  //   dailyForecast.value.temperature.push(hour.main.temp)
-  //   dailyForecast.value.icon.push(hour.weather[0].icon)
-  // })
-  //dailyForecast.temperature.push(hour.main.temp);
-  //console.log(dailyForecast)
-
   console.log(temp.value.length)
 }
+
+const clearData = () => {
+  for (let i = 0; i < 8; i++) {
+  temp.value.pop(i);
+  detailsIcon.value.pop(i);
+}
+  console.log(temp);
+}
+
+
 </script>
 
 <style scoped></style>
