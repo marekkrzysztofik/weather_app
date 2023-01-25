@@ -41,15 +41,15 @@
 .details-grid {
   margin: 0;
   display: grid;
+  justify-items: center;
   grid-template-columns: repeat(8, 80px);
   grid-template-rows: 1fr;
   grid-column-gap: 15px;
   grid-row-gap: 0px;
+
   }
 .details-item {
-  margin: 0 auto;
-  text-align: center;
-  flex-direction: column;
+
 }  
 .details-img {
   width: 60px;

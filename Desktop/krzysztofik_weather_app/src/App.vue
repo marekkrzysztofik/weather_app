@@ -1,10 +1,11 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
   <RouterView />
 </template>
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import { provide, ref } from "vue"
+
+
+</script>
 
 <style scoped></style>

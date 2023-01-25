@@ -11,7 +11,10 @@
               class="btn"
               label="Details"
             />
-            <Button class="btn" label="Submit" />
+            <RouterLink to="/mapa" v-slot="{ navigate }" >
+              <Button @click="navigate" role="link" class="btn" label="Submit" /> 
+            </RouterLink>
+            
           </div>
         </template>
       </Card>
@@ -51,31 +54,36 @@
           </template>
         </Card>
       </div>
-      <div class="details-grid">
-        <div v-for="item of temp" class="details-item flex">
-          <h1>3h</h1>
-          <p>{{ item }} ℃</p>
+      
+        <div class="details-grid">
+            <div v-for="item of temp" class="details-item">
+              <h1>3h</h1>
+              <p>{{ item }} ℃</p>
+            </div>
+              <img
+              v-for="item2 of detailsIcon"
+              class="details-img"
+              :src="`/icons/${item2}.svg`"
+              alt="weather-icon"
+              />
         </div>
-        <img
-          v-for="item2 of detailsIcon"
-          class="details-img"
-          :src="`/icons/${item2}.svg`"
-          alt=""
-        />
-      </div>
+            
+        
+      
     </div>
   </div>
 </template>
 <script setup>
 import { ref } from 'vue'
 import axios from 'axios'
-
+import { RouterLink } from 'vue-router'
 let loader = false
 let now = new Date()
 var months = now.getMonth() + 1
 if (months < 11) {
   months = '' + now.getMonth() + 1
 }
+
 const today = ref(now.getDate() + '.' + months + '.' + now.getFullYear())
 const searchQuery = ref('')
 const weatherData = ref('')
