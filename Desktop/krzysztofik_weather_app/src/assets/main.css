@@ -1,10 +1,18 @@
-
+.siema {
+  display: flex;
+  flex-direction: column;
+}
 .container {
   display: flex;
   justify-content: center;
 }
+.side-bar {
+  margin: 20px;
+}
 .tab-menu {
   flex-direction: column;
+  justify-content: center;
+  text-align: center;
 }
 .date {
   font-size: 25px;

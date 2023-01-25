@@ -11,6 +11,7 @@ import InputText from 'primevue/inputtext';
 import Card from 'primevue/card';
 import Button from 'primevue/button';
 import './assets/main.css'
+import HomeView from './views/HomeView.vue'
 
 const app = createApp(App)
 
@@ -19,5 +20,6 @@ app.use(router)
 app.use(PrimeVue);
 app.component('InputText', InputText);
 app.component('Card', Card);
+app.component('HomeView', HomeView);
 app.component('Button', Button);
 app.mount('#app')
