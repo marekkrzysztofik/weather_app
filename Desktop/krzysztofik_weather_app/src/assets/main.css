@@ -24,6 +24,7 @@
   
   margin: 10px;
 }
+
 .search-box {
   margin: 20px auto;
 }
@@ -56,11 +57,26 @@
   grid-row-gap: 0px;
 
   }
-.details-item {
+  .cards-1{
+    margin: 0;
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr ;
+    grid-template-rows: 110px;
+    grid-row-gap: 15px;
+  }
+.daily-item {
 
+}
+.daily-item-1 {
+ 
 }  
 .details-img {
   width: 60px;
+}  
+.details-img-1 {
+  margin-top:25px;
+  width: 100px;
 }  
 .flex {
   display: flex;

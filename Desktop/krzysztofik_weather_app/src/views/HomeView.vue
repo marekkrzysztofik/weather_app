@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="flex">
-      <Card style="width: 12rem; padding: 0; height: 17rem;">
+      <Card style="width: 12rem; padding: 0; height: 17rem">
         <template #content>
           <div class="tab-menu flex">
             <p class="date margin-0">{{ time }}</p>
@@ -38,49 +38,59 @@
         <Button @click="currentWeather(searchQuery)" label="Submit" />
       </div>
       <div class="flex">
-        <Card v-if="allData.mainTemp!=0" class="card" style="width: 20rem; padding: 0">
+        <Card
+          v-if="allData.mainTemp != 0"
+          class="card"
+          style="width: 20rem; padding: 0"
+        >
           <template #title>
             <div class="flex">
-              <p class="margin-0">
-                Current weather in {{ searchQuery }}
-              </p>
+              <p class="margin-0">Current weather in {{ searchQuery }}</p>
               <img class="icon" :src="`/icons/${allData.icon}.svg`" />
             </div>
           </template>
           <template #content>
             <div class="flex main-info">
-              <p class="main-temp margin-0">
-                {{ allData.mainTemp }} ℃
-              </p>
+              <p class="main-temp margin-0">{{ allData.mainTemp }} ℃</p>
               <div>
                 <p class="margin-0">{{ allData.description }}</p>
               </div>
             </div>
           </template>
         </Card>
-        <Card class="card" style="width: 35rem; padding: 0">
-          
-        </Card>
+        <Card class="card" style="width: 35rem; padding: 0"> </Card>
       </div>
 
       <div class="details-grid">
-        <div v-for="item of temp" class="details-item">
+        <div v-for="item of hourlyWeather.temp" class="details-item">
           <h1>3h</h1>
           <p>{{ item }} ℃</p>
         </div>
         <img
-          v-for="item2 of detailsIcon"
+          v-for="icon of hourlyWeather.detailsIcon"
           class="details-img"
-          :src="`/icons/${item2}.svg`"
+          :src="`/icons/${icon}.svg`"
           alt="weather-icon"
         />
       </div>
     </div>
-    <div class="cards">
-      <div v-for="item3 of dailyTemp.temp">
-        elo
+    <div class="cards-1">
+      <div v-for="item2 of dailyWeather.temp" class="daily-item">
+        <h1>3h</h1>
+        <p>{{ item2 }} ℃</p>
       </div>
+      
     </div>
+    <div class="cards-1">
+      <div class="cards">
+        <img  v-for="icon2 of dailyWeather.detailsIcon"
+          class="details-img-1"
+          :src="`/icons/${icon2}.svg`"
+          alt="weather-icon"
+        />
+      </div>
+        
+      </div>
   </div>
 </template>
 <script setup>
@@ -97,9 +107,9 @@ if (months < 11) {
 const today = ref(now.getDate() + '.' + months + '.' + now.getFullYear())
 const searchQuery = ref('')
 const allData = ref({
-  mainTemp:'',
-  description:'',
-  icon:''
+  mainTemp: '',
+  description: '',
+  icon: '',
 })
 console.log(allData.value.openingHours)
 const currentWeather = async (query) => {
@@ -108,48 +118,55 @@ const currentWeather = async (query) => {
   await fetch(url)
     .then((response) => response.json())
     .then((data) => {
-     allData.value.mainTemp=data.main.temp
-     allData.value.description=data.weather[0].description
-     allData.value.icon=data.weather[0].icon
-     console.log(allData.value.icon)
+      allData.value.mainTemp = data.main.temp
+      allData.value.description = data.weather[0].description
+      allData.value.icon = data.weather[0].icon
+      console.log(allData.value.icon)
     })
 }
-
-const temp = ref([])
-const detailsIcon = ref([])
-
-const dailyTemp = ref({
+const hourlyWeather = ref({
   temp:[],
-  detailsIcon:[]
+  detailsIcon:[],
+  weatherTime:[]
+})
+const dailyWeather = ref({
+  temp: [],
+  detailsIcon: [],
+  weatherTime: []
 })
 const getWeatherForecast = async (query) => {
   const apiLink = `http://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=11f8ef5fb876de2d2394104040969315`
   const pogoda = await axios.get(apiLink)
   let forecast = pogoda.data.list
-  
-  if (temp.value.length == 0 && detailsIcon.value.length == 0) {
-    await forecast.slice(0,8).forEach((hour) => {
-        temp.value.push(hour.main.temp)
-      detailsIcon.value.push(hour.weather[0].icon)
+
+  if (hourlyWeather.value.temp.length == 0 && hourlyWeather.value.detailsIcon.length == 0) {
+    await forecast.slice(0, 8).forEach((hour) => {
+      hourlyWeather.value.temp.push(hour.main.temp)
+      hourlyWeather.value.detailsIcon.push(hour.weather[0].icon)
+      hourlyWeather.value.weatherTime.push(hour.dt_txt);
     })
-  } 
-  if (dailyTemp.value.temp.length == 0 && dailyTemp.value.detailsIcon == 0) {
-    for (let a = 0; a < forecast.length; a++) {
-      if(a%4===0) {
-        dailyTemp.value.temp.push(forecast[a].main.temp)
-        dailyTemp.value.detailsIcon.push(forecast[a].weather[0].icon)
+  }
+  if (dailyWeather.value.temp.length == 0 && dailyWeather.value.detailsIcon == 0) {
+    for (let a = 1; a < forecast.length; a++) {
+      if (a % 4 === 0) {
+        dailyWeather.value.temp.push(forecast[a].main.temp)
+        dailyWeather.value.detailsIcon.push(forecast[a].weather[0].icon)
+        dailyWeather.value.weatherTime.push(forecast[a].dt_txt);
       }
     }
   }
-  console.log(dailyTemp.value)
+  console.log(forecast,hourlyWeather.value.weatherTime,dailyWeather.value.weatherTime)
 }
 
 const clearData = () => {
   for (let i = 0; i < 8; i++) {
-    temp.value.pop(i)
-    detailsIcon.value.pop(i)
+    hourlyWeather.value.temp.pop(i)
+    hourlyWeather.value.detailsIcon.pop(i)
   }
-  console.log(temp)
+  // for (let x = 0; x < 8; x++) {
+  //   dailyTemp.value.temp.pop(x)
+  //   dailyTemp.value.detailsIcon.pop(x)
+  // }
 }
 </script>
 
