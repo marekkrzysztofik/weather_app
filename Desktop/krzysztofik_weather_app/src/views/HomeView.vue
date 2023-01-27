@@ -58,30 +58,28 @@
             </div>
           </template>
         </Card>
-        <Card class="card" style="width: 35rem; padding: 0"> </Card>
+        <Card class="card" style="width: 30rem; padding: 0"> </Card>
       </div>
 
       <div class="flex details">
         <h2 v-for="time of hourlyWeather.weatherTime">{{ time }}</h2>
       </div>
       <div class="flex details">
-          <img
-            v-for="icon of hourlyWeather.detailsIcon"
-            class="details-img"
-            :src="`/icons/${icon}.svg`"
-            alt="weather-icon"
-          />
-        </div>
+        <img
+          v-for="icon of hourlyWeather.detailsIcon"
+          class="details-img"
+          :src="`/icons/${icon}.svg`"
+          alt="weather-icon"
+        />
+      </div>
       <div class="flex details">
         <p v-for="item of hourlyWeather.temp">{{ item }} ℃</p>
       </div>
-        
-      
     </div>
-    <div class="cards-1">
-      <div v-for="item2 of dailyWeather.temp" class="daily-item">
-        <h1>3h</h1>
-        <p>{{ item2 }} ℃</p>
+
+    <div v-if="dailyWeather.temp != 0" class="cards-1">
+      <div v-for="hours of dailyWeather.timeIntervals" class="daily-item">
+        <h2>next {{ hours }}h</h2>
       </div>
     </div>
     <div class="cards-1">
@@ -92,6 +90,22 @@
           :src="`/icons/${icon2}.svg`"
           alt="weather-icon"
         />
+      </div>
+    </div>
+    <div class="cards-1">
+      <div v-for="desc of dailyWeather.description" class="daily-item">
+        <p>{{ desc }} ℃</p>
+      </div>
+    </div>
+    <div class="cards-1">
+      <div v-for="temp of dailyWeather.temp" class="daily-item">
+        <p>{{ temp }} ℃</p>
+      </div>
+    </div>
+    <div class="cards-1">
+      <div v-for="feelsLike of dailyWeather.feelsLike" class="daily-item">
+        <p>{{ feelsLike }} ℃</p>
+        <p><i>feels like</i></p>
       </div>
     </div>
   </div>
@@ -114,7 +128,7 @@ const allData = ref({
   description: '',
   icon: '',
 })
-console.log(allData.value.openingHours)
+
 const currentWeather = async (query) => {
   clearData()
   const url = `http://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&APPID=11f8ef5fb876de2d2394104040969315`
@@ -134,14 +148,15 @@ const hourlyWeather = ref({
 })
 const dailyWeather = ref({
   temp: [],
+  feelsLike: [],
   detailsIcon: [],
-  weatherDate: [],
+  description: [],
+  timeIntervals: [24, 48, 72, 96],
 })
 const getWeatherForecast = async (query) => {
   const apiLink = `http://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=11f8ef5fb876de2d2394104040969315`
   const pogoda = await axios.get(apiLink)
   let forecast = pogoda.data.list
-
   if (
     hourlyWeather.value.temp.length == 0 &&
     hourlyWeather.value.detailsIcon.length == 0
@@ -160,25 +175,28 @@ const getWeatherForecast = async (query) => {
     dailyWeather.value.detailsIcon == 0
   ) {
     for (let a = 1; a < forecast.length; a++) {
-      if (a % 4 === 0) {
+      if (a % 8 === 0) {
         dailyWeather.value.temp.push(forecast[a].main.temp)
+        dailyWeather.value.feelsLike.push(forecast[a].main.feels_like)
         dailyWeather.value.detailsIcon.push(forecast[a].weather[0].icon)
-        dailyWeather.value.weatherDate.push(forecast[a].dt_txt)
+        dailyWeather.value.description.push(forecast[a].weather[0].description)
       }
     }
   }
-  console.log(hourlyWeather.value.weatherDate, hourlyWeather.value.weatherTime)
 }
-
 const clearData = () => {
   for (let i = 0; i < 8; i++) {
     hourlyWeather.value.temp.pop(i)
     hourlyWeather.value.detailsIcon.pop(i)
+    hourlyWeather.value.weatherDate.pop(i)
+    hourlyWeather.value.weatherTime.pop(i)
   }
-  // for (let x = 0; x < 8; x++) {
-  //   dailyTemp.value.temp.pop(x)
-  //   dailyTemp.value.detailsIcon.pop(x)
-  // }
+  for (let x = 0; x < 9; x++) {
+    dailyWeather.value.temp.pop(x)
+    dailyWeather.value.feelsLike.pop(x)
+    dailyWeather.value.detailsIcon.pop(x)
+    dailyWeather.value.description.pop(x)
+  }
 }
 </script>
 
