@@ -1,10 +1,15 @@
-.siema {
-  display: flex;
-  flex-direction: column;
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+body {
+  font-family: 'Kanit', sans-serif;
+}
+h2 {
+  margin: 15px auto 0;
+}
+.p-card {
+  font-family: 'Kanit', sans-serif;
 }
 .container {
   display: flex;
-  justify-content: center;
 }
 .side-bar {
   margin: 20px;
@@ -21,10 +26,8 @@
 .cards {
   display: flex;
   flex-direction: column;
-  
   margin: 10px;
 }
-
 .search-box {
   margin: 20px auto;
 }
@@ -47,37 +50,26 @@
   width: 150px;
   margin: auto;
 }
-.details-grid {
+.details {
+  justify-content: space-around;
+}
+.cards-1 {
   margin: 0;
   display: grid;
   justify-items: center;
-  grid-template-columns: repeat(8, 80px);
-  grid-template-rows: 1fr;
-  grid-column-gap: 15px;
-  grid-row-gap: 0px;
-
-  }
-  .cards-1{
-    margin: 0;
-    display: grid;
-    justify-items: center;
-    grid-template-columns: 1fr ;
-    grid-template-rows: 110px;
-    grid-row-gap: 15px;
-  }
-.daily-item {
-
+  grid-template-columns: 1fr;
+  grid-template-rows: 110px;
+  grid-row-gap: 15px;
 }
-.daily-item-1 {
- 
-}  
+.details-item {
+}
 .details-img {
   width: 60px;
-}  
+}
 .details-img-1 {
-  margin-top:25px;
+  margin-top: 25px;
   width: 100px;
-}  
+}
 .flex {
   display: flex;
 }

@@ -61,36 +61,39 @@
         <Card class="card" style="width: 35rem; padding: 0"> </Card>
       </div>
 
-      <div class="details-grid">
-        <div v-for="item of hourlyWeather.temp" class="details-item">
-          <h1>3h</h1>
-          <p>{{ item }} ℃</p>
-        </div>
-        <img
-          v-for="icon of hourlyWeather.detailsIcon"
-          class="details-img"
-          :src="`/icons/${icon}.svg`"
-          alt="weather-icon"
-        />
+      <div class="flex details">
+        <h2 v-for="time of hourlyWeather.weatherTime">{{ time }}</h2>
       </div>
+      <div class="flex details">
+          <img
+            v-for="icon of hourlyWeather.detailsIcon"
+            class="details-img"
+            :src="`/icons/${icon}.svg`"
+            alt="weather-icon"
+          />
+        </div>
+      <div class="flex details">
+        <p v-for="item of hourlyWeather.temp">{{ item }} ℃</p>
+      </div>
+        
+      
     </div>
     <div class="cards-1">
       <div v-for="item2 of dailyWeather.temp" class="daily-item">
         <h1>3h</h1>
         <p>{{ item2 }} ℃</p>
       </div>
-      
     </div>
     <div class="cards-1">
       <div class="cards">
-        <img  v-for="icon2 of dailyWeather.detailsIcon"
+        <img
+          v-for="icon2 of dailyWeather.detailsIcon"
           class="details-img-1"
           :src="`/icons/${icon2}.svg`"
           alt="weather-icon"
         />
       </div>
-        
-      </div>
+    </div>
   </div>
 </template>
 <script setup>
@@ -121,41 +124,50 @@ const currentWeather = async (query) => {
       allData.value.mainTemp = data.main.temp
       allData.value.description = data.weather[0].description
       allData.value.icon = data.weather[0].icon
-      console.log(allData.value.icon)
     })
 }
 const hourlyWeather = ref({
-  temp:[],
-  detailsIcon:[],
-  weatherTime:[]
+  temp: [],
+  detailsIcon: [],
+  weatherDate: [],
+  weatherTime: [],
 })
 const dailyWeather = ref({
   temp: [],
   detailsIcon: [],
-  weatherTime: []
+  weatherDate: [],
 })
 const getWeatherForecast = async (query) => {
   const apiLink = `http://api.openweathermap.org/data/2.5/forecast?q=${query}&units=metric&appid=11f8ef5fb876de2d2394104040969315`
   const pogoda = await axios.get(apiLink)
   let forecast = pogoda.data.list
 
-  if (hourlyWeather.value.temp.length == 0 && hourlyWeather.value.detailsIcon.length == 0) {
+  if (
+    hourlyWeather.value.temp.length == 0 &&
+    hourlyWeather.value.detailsIcon.length == 0
+  ) {
     await forecast.slice(0, 8).forEach((hour) => {
       hourlyWeather.value.temp.push(hour.main.temp)
       hourlyWeather.value.detailsIcon.push(hour.weather[0].icon)
-      hourlyWeather.value.weatherTime.push(hour.dt_txt);
+      hourlyWeather.value.weatherDate.push(hour.dt_txt)
+    })
+    hourlyWeather.value.weatherDate.forEach((date) => {
+      hourlyWeather.value.weatherTime.push(date.substr(11, 5))
     })
   }
-  if (dailyWeather.value.temp.length == 0 && dailyWeather.value.detailsIcon == 0) {
+  if (
+    dailyWeather.value.temp.length == 0 &&
+    dailyWeather.value.detailsIcon == 0
+  ) {
     for (let a = 1; a < forecast.length; a++) {
       if (a % 4 === 0) {
         dailyWeather.value.temp.push(forecast[a].main.temp)
         dailyWeather.value.detailsIcon.push(forecast[a].weather[0].icon)
-        dailyWeather.value.weatherTime.push(forecast[a].dt_txt);
+        dailyWeather.value.weatherDate.push(forecast[a].dt_txt)
       }
     }
   }
-  console.log(forecast,hourlyWeather.value.weatherTime,dailyWeather.value.weatherTime)
+  console.log(hourlyWeather.value.weatherDate, hourlyWeather.value.weatherTime)
 }
 
 const clearData = () => {
