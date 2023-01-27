@@ -1,18 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import Map from '../components/Map.vue'
+import WeatherApp from '../views/WeatherApp.vue'
+import Home from '../components/Home.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView
+      name: 'Home',
+      component: Home
     },
     {
-      path: '/mapa',
-      name: 'Map',
-      component: Map
+      path: '/weather-app',
+      name: 'WeatherApp',
+      component: WeatherApp
     },
   ]
 })
