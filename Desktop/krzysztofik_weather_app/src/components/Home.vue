@@ -1,15 +1,12 @@
 <template>
-  <div class="cards">
-    <div class="flex">
-      <p class="date">{{ time }} in Poland</p>
-      <TabMenu :model="items"> </TabMenu>
-    </div>
-    <RouterView />
+  <div class="flex center">
+    <TabMenu :model="items"> </TabMenu>
+    <p class="date">{{ currentTime }} in Poland</p>
   </div>
 </template>
 <script>
-import { RouterLink, RouterView } from 'vue-router'
 import { ref } from 'vue'
+import { clockMixin } from '/src/App.vue'
 export default {
   setup() {
     const items = ref([
@@ -38,24 +35,7 @@ export default {
     ])
     return { items }
   },
-  data() {
-    return {
-      interval: null,
-      time: null,
-    }
-  },
-  beforeDestroy() {
-    clearInterval(this.interval)
-  },
-  created() {
-    this.interval = setInterval(() => {
-      this.time = Intl.DateTimeFormat(navigator.language, {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-      }).format()
-    }, 1000)
-  },
+  mixins: [clockMixin],
 }
 </script>
 

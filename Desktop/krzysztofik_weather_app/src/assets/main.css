@@ -1,24 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
 body {
   font-family: 'Kanit', sans-serif;
-  background-color: #B9FFF8;
+  background-color: #cff5e7;
 }
 h2 {
   margin: 15px auto 0;
 }
 .p-tabmenu {
   font-family: 'Kanit', sans-serif;
-  
   margin: 10px;
+  border-radius: 10px;
 }
 .p-tabmenu-nav {
-  background-color: #B9FFF8;
+  background-color: #cff5e7;
+}
+.p-button {
+  background-color: #301e67;
 }
 .p-card {
   font-family: 'Kanit', sans-serif;
-}
-.container {
-  display: flex;
+  color: black;
 }
 .side-bar {
   margin: 20px;
@@ -29,8 +30,9 @@ h2 {
   text-align: center;
 }
 .date {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 500;
+  margin: 0;
 }
 .cards {
   display: flex;
@@ -62,14 +64,12 @@ h2 {
   justify-content: space-around;
 }
 .cards-1 {
-  margin: 0;
   display: grid;
   justify-items: center;
   grid-template-columns: 1fr;
   grid-template-rows: 110px;
+  grid-column-gap: 20px;
   grid-row-gap: 15px;
-}
-.details-item {
 }
 .details-img {
   width: 60px;
@@ -81,6 +81,13 @@ h2 {
 .flex {
   display: flex;
 }
+.center {
+  justify-content: center;
+  align-items: center;
+}
+.white {
+  color: white;
+}
 .margin-0 {
   margin: 0;
 }
@@ -89,13 +96,14 @@ h2 {
 }
 .padding-10 {
   padding: 10px;
+  width: 500px;
 }
 .br-10 {
   border-radius: 10px;
 }
 .bg-sec {
-  
+  background-color: #301e67;
 }
 .bg-third {
-  background-color: #6FEDD6;
+  background-color: #59c1bd;
 }
