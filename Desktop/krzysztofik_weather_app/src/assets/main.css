@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
 body {
   font-family: 'Kanit', sans-serif;
-  background-color: #CFF5E7;
+  background-color: #cff5e7;
 }
 h2 {
   margin: 15px auto 0;
@@ -12,10 +12,10 @@ h2 {
   border-radius: 10px;
 }
 .p-tabmenu-nav {
-  background-color: #CFF5E7;
+  background-color: #cff5e7;
 }
 .p-button {
-  background-color: #301E67;
+  background-color: #301e67;
 }
 .p-card {
   font-family: 'Kanit', sans-serif;
@@ -71,9 +71,6 @@ h2 {
   grid-column-gap: 20px;
   grid-row-gap: 15px;
 }
-.details-item {
-  
-}
 .details-img {
   width: 60px;
 }
@@ -89,7 +86,7 @@ h2 {
   align-items: center;
 }
 .white {
-  color:white;
+  color: white;
 }
 .margin-0 {
   margin: 0;
@@ -105,8 +102,8 @@ h2 {
   border-radius: 10px;
 }
 .bg-sec {
-  background-color: #301E67;
+  background-color: #301e67;
 }
 .bg-third {
-  background-color: #59C1BD;
+  background-color: #59c1bd;
 }

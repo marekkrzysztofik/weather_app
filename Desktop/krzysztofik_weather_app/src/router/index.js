@@ -7,14 +7,14 @@ const router = createRouter({
     {
       path: '/',
       name: 'Homepage',
-      component: Homepage
+      component: Homepage,
     },
     {
       path: '/weather-app',
       name: 'WeatherApp',
-      component: WeatherApp
+      component: WeatherApp,
     },
-  ]
+  ],
 })
 
 export default router

@@ -16,7 +16,6 @@
               class="btn"
               label="Details"
             />
-
             <Button role="link" class="btn" label="Submit" />
           </div>
         </template>
@@ -35,7 +34,7 @@
         </span>
         <Button @click="currentWeather(searchQuery)" label="Submit" />
       </div>
-      <div v-if="allData.description!=0" class="flex">
+      <div v-if="allData.description != 0" class="flex">
         <Card class="card bg-third" style="width: 20rem; padding: 0">
           <template #title>
             <div class="flex">
@@ -52,10 +51,7 @@
             </div>
           </template>
         </Card>
-        <Card
-          class="card bg-third"
-          style="width: 30rem; padding: 0"
-        >
+        <Card class="card bg-third" style="width: 30rem; padding: 0">
           <template #title> </template>
 
           <template #content>
@@ -67,34 +63,28 @@
           </template>
         </Card>
       </div>
-
-      <!-- <div class="flex details">
-        <h2 v-for="time of hourlyWeather.weatherTime">{{ time }}</h2>
-      </div> -->
       <div class="bg-sec white margin-10 br-10">
         <h2 class="margin-10" v-if="hourlyWeather.realTime != 0">
-        {{
-          allData.timezone != 0 ? 'Polish time ' + allData.timezone + 'h' : ''
-        }}
-      </h2>
-      <div class="flex details ">
-        <h4 v-for="time of hourlyWeather.realTime">{{ time }}</h4>
-      </div>
-      <div class="flex details">
-        <img
-          v-for="icon of hourlyWeather.detailsIcon"
-          class="details-img"
-          :src="`/icons/${icon}.svg`"
-          alt="weather-icon"
-        />
-      </div>
-      <div class="flex details">
-        <p v-for="item of hourlyWeather.temp">{{ item }} ℃</p>
+          {{
+            allData.timezone != 0 ? 'Polish time ' + allData.timezone + 'h' : ''
+          }}
+        </h2>
+        <div class="flex details">
+          <h4 v-for="time of hourlyWeather.realTime">{{ time }}</h4>
+        </div>
+        <div class="flex details">
+          <img
+            v-for="icon of hourlyWeather.detailsIcon"
+            class="details-img"
+            :src="`/icons/${icon}.svg`"
+            alt="weather-icon"
+          />
+        </div>
+        <div class="flex details">
+          <p v-for="item of hourlyWeather.temp">{{ item }} ℃</p>
+        </div>
       </div>
     </div>
-      </div>
-      
-
     <div
       v-if="dailyWeather.temp != 0"
       class="flex margin-10 bg-third padding-10 br-10"
@@ -116,7 +106,6 @@
           />
         </div>
       </div>
-
       <div class="cards-1 margin-10">
         <div v-for="desc of dailyWeather.description" class="daily-item">
           <p>{{ desc }}</p>
@@ -156,7 +145,6 @@ var months = now.getMonth() + 1
 if (months < 11) {
   months = '' + now.getMonth() + 1
 }
-
 const today = ref(now.getDate() + '.' + months + '.' + now.getFullYear())
 const searchQuery = ref('')
 const allData = ref({
@@ -168,7 +156,6 @@ const allData = ref({
   humidity: '',
   pressure: '',
 })
-
 const currentWeather = async (query) => {
   clearData()
   const url = `http://api.openweathermap.org/data/2.5/weather?q=${query}&units=metric&APPID=11f8ef5fb876de2d2394104040969315`
